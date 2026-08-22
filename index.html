@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seu Nome — Desenvolvedor(a)</title>
+<meta name="description" content="Portfólio de Seu Nome, desenvolvedor(a) full stack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0: #0e0e17;
+    --bg-1: #14141f;
+    --bg-2: #1b1b29;
+    --line: #2a2a3d;
+    --text-hi: #eaeaf5;
+    --text-mid: #a7a7c2;
+    --text-low: #6d6d8a;
+    --purple: #a78bfa;
+    --green: #4ade80;
+    --orange: #fb923c;
+    --pink: #f472b6;
+    --blue: #60a5fa;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg-0);
+    color:var(--text-hi);
+    font-family:var(--sans);
+    line-height:1.6;
+  }
+
+  ::selection{background:var(--purple);color:var(--bg-0);}
+
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- Top tab bar ---------- */
+  .tabbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    align-items:stretch;
+    background:var(--bg-1);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+  }
+  .tabbar .brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 18px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--text-low);
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .tabbar .dots{display:flex;gap:6px;}
+  .tabbar .dots span{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .tabbar .dots span:nth-child(1){background:#ff5f57;}
+  .tabbar .dots span:nth-child(2){background:#febc2e;}
+  .tabbar .dots span:nth-child(3){background:#28c840;}
+
+  .tab{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:14px 20px;
+    color:var(--text-low);
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:color .15s ease, background .15s ease;
+  }
+  .tab .dim{color:var(--text-low);}
+  .tab:hover{color:var(--text-hi);background:var(--bg-2);}
+  .tab.active{color:var(--text-hi);background:var(--bg-0);border-bottom:2px solid var(--purple);}
+
+  section{
+    max-width:880px;
+    margin:0 auto;
+    padding:90px 24px;
+    border-bottom:1px solid var(--line);
+  }
+  section:last-of-type{border-bottom:none;}
+
+  .lineno{
+    color:var(--text-low);
+    font-family:var(--mono);
+    font-size:12px;
+    user-select:none;
+    margin-right:16px;
+  }
+
+  .code-row{display:flex;align-items:flex-start;}
+
+  .kw{color:var(--pink);}
+  .fn{color:var(--blue);}
+  .str{color:var(--green);}
+  .cm{color:var(--text-low);font-style:italic;}
+  .num{color:var(--orange);}
+  .cls{color:var(--purple);}
+
+  /* ---------- Hero ---------- */
+  #about{padding-top:70px;}
+  .hero-code{
+    font-family:var(--mono);
+    font-size:clamp(14px,2.2vw,17px);
+    background:var(--bg-1);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:28px clamp(16px,3vw,32px);
+    overflow-x:auto;
+  }
+  .hero-code .l{white-space:pre;}
+  .cursor{
+    display:inline-block;
+    width:9px;
+    height:1.1em;
+    background:var(--purple);
+    vertical-align:text-bottom;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-title{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(28px,5vw,44px);
+    margin:28px 0 10px;
+    color:var(--text-hi);
+  }
+  .hero-title .accent{color:var(--purple);}
+  .hero-sub{
+    color:var(--text-mid);
+    font-size:17px;
+    max-width:60ch;
+  }
+  .hero-links{
+    margin-top:28px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:10px 18px;
+    border-radius:6px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:inherit;
+    cursor:pointer;
+    display:inline-block;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);border-color:var(--purple);}
+  .btn.primary{background:var(--purple);color:var(--bg-0);border-color:var(--purple);font-weight:600;}
+  .btn.primary:hover{background:#b8a4fc;}
+
+  /* ---------- Section headers ---------- */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:36px;
+    font-family:var(--mono);
+  }
+  .section-head .path{color:var(--text-low);font-size:13px;}
+  .section-head h2{font-size:22px;color:var(--text-hi);}
+  .section-head h2 .kw{font-weight:400;}
+
+  /* ---------- Skills ---------- */
+  .skill-groups{display:flex;flex-direction:column;gap:26px;}
+  .skill-group .label{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-low);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:12px;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:8px 14px;
+    background:var(--bg-1);
+    border:1px solid var(--line);
+    border-radius:6px;
+    color:var(--text-hi);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .chip:hover{border-color:var(--purple);transform:translateY(-2px);}
+  .chip .bar{
+    width:6px;height:6px;border-radius:50%;
+  }
+
+  /* ---------- Projects ---------- */
+  .projects{display:flex;flex-direction:column;gap:18px;}
+  .project{
+    background:var(--bg-1);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px 26px;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .project:hover{border-color:var(--purple);transform:translateY(-3px);}
+  .project .sig{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--text-hi);
+    margin-bottom:8px;
+  }
+  .project .sig .fn{font-weight:600;}
+  .project p{color:var(--text-mid);font-size:14.5px;margin-bottom:14px;max-width:65ch;}
+  .project .tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .project .tags span{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-low);
+    border:1px solid var(--line);
+    padding:3px 9px;
+    border-radius:99px;
+  }
+  .code-toggle{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--purple);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:4px 0;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .code-toggle:hover{color:var(--text-hi);}
+  .code-toggle .chev{
+    display:inline-block;
+    transition:transform .15s ease;
+    font-size:10px;
+  }
+  .code-toggle.open .chev{transform:rotate(90deg);}
+
+  .code-block{
+    display:none;
+    font-family:var(--mono);
+    font-size:12.5px;
+    line-height:1.7;
+    background:var(--bg-0);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:16px 18px;
+    margin-top:10px;
+    overflow-x:auto;
+    color:var(--text-hi);
+  }
+  .code-block.open{display:block;}
+
+  /* ---------- Contact ---------- */
+  .terminal{
+    font-family:var(--mono);
+    background:var(--bg-1);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 28px;
+    font-size:14px;
+  }
+  .terminal .prompt{color:var(--green);}
+  .terminal .path2{color:var(--blue);}
+  .terminal .out{color:var(--text-mid);margin:6px 0 18px 0;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;}
+
+  footer{
+    text-align:center;
+    padding:32px 24px 50px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-low);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cursor{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  @media (max-width:640px){
+    section{padding:60px 18px;}
+  }
+
+  :focus-visible{
+    outline:2px solid var(--purple);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabbar" aria-label="Navegação principal">
+  <div class="brand"><span class="dots"><span></span><span></span><span></span></span> portfolio</div>
+  <a class="tab active" href="#about" data-tab="about">📄 <span>sobre.js</span></a>
+  <a class="tab" href="#skills" data-tab="skills">🐍 <span>skills.py</span></a>
+  <a class="tab" href="#projects" data-tab="projects">📁 <span>projetos.md</span></a>
+  <a class="tab" href="#contact" data-tab="contact">💻 <span>contato.sh</span></a>
+</nav>
+
+<!-- ============ SOBRE ============ -->
+<section id="about">
+  <div class="hero-code">
+    <div class="l"><span class="cm">// sobre.js</span></div>
+    <div class="l"><span class="kw">const</span> <span class="fn">dev</span> = {</div>
+    <div class="l">&nbsp;&nbsp;nome: <span class="str">"Seu Nome"</span>,</div>
+    <div class="l">&nbsp;&nbsp;cargo: <span class="str">"Desenvolvedor(a) Full Stack"</span>,</div>
+    <div class="l">&nbsp;&nbsp;linguagens: [<span class="str">"JavaScript"</span>, <span class="str">"Python"</span>, <span class="str">"Java"</span>, <span class="str">"C++"</span>],</div>
+    <div class="l">&nbsp;&nbsp;aprendendo: <span class="kw">true</span><span class="cursor"></span></div>
+    <div class="l">};</div>
+  </div>
+
+  <h1 class="hero-title">Olá, eu sou <span class="accent">Seu Nome</span> 👋</h1>
+  <p class="hero-sub">
+    Escrevo código em várias linguagens e gosto de transformar problemas reais em software funcional.
+    Aqui embaixo tem um pouco do que eu sei fazer e do que já construí — troque este texto
+    pela sua própria história.
+  </p>
+
+  <div class="hero-links">
+    <a class="btn primary" href="#projects">Ver projetos</a>
+    <a class="btn" href="https://github.com/s1mp21" target="_blank" rel="noopener">GitHub ↗</a>
+    <a class="btn" href="https://discord.gg/d7DU9X5rt" target="_blank" rel="noopener">Discord ↗</a>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="section-head">
+    <span class="path">~/skills</span>
+    <h2><span class="kw">import</span> habilidades</h2>
+  </div>
+
+  <div class="skill-groups">
+    <div class="skill-group">
+      <div class="label">Linguagens</div>
+      <div class="chips">
+        <span class="chip"><span class="bar" style="background:var(--orange)"></span>JavaScript</span>
+        <span class="chip"><span class="bar" style="background:var(--blue)"></span>Python</span>
+        <span class="chip"><span class="bar" style="background:var(--pink)"></span>Java</span>
+        <span class="chip"><span class="bar" style="background:var(--purple)"></span>C++</span>
+        <span class="chip"><span class="bar" style="background:var(--green)"></span>TypeScript</span>
+        <span class="chip"><span class="bar" style="background:var(--orange)"></span>PHP</span>
+        <span class="chip"><span class="bar" style="background:var(--blue)"></span>SQL</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="label">Front-end</div>
+      <div class="chips">
+        <span class="chip"><span class="bar" style="background:var(--pink)"></span>HTML5</span>
+        <span class="chip"><span class="bar" style="background:var(--blue)"></span>CSS3</span>
+        <span class="chip"><span class="bar" style="background:var(--purple)"></span>React</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="label">Back-end &amp; dados</div>
+      <div class="chips">
+        <span class="chip"><span class="bar" style="background:var(--green)"></span>Node.js</span>
+        <span class="chip"><span class="bar" style="background:var(--orange)"></span>Django</span>
+        <span class="chip"><span class="bar" style="background:var(--blue)"></span>MySQL</span>
+        <span class="chip"><span class="bar" style="background:var(--purple)"></span>MongoDB</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="label">Ferramentas</div>
+      <div class="chips">
+        <span class="chip"><span class="bar" style="background:var(--text-mid)"></span>Git &amp; GitHub</span>
+        <span class="chip"><span class="bar" style="background:var(--text-mid)"></span>Docker</span>
+        <span class="chip"><span class="bar" style="background:var(--text-mid)"></span>Linux</span>
+        <span class="chip"><span class="bar" style="background:var(--text-mid)"></span>VS Code</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJETOS ============ -->
+<section id="projects">
+  <div class="section-head">
+    <span class="path">~/projetos</span>
+    <h2><span class="kw">function</span> projetos()</h2>
+  </div>
+
+  <div class="projects">
+    <div class="project">
+      <div class="sig"><span class="fn">projeto</span>(<span class="str">"Nome do Projeto 1"</span>)</div>
+      <p>Aplicação web feita com React que consome uma API para exibir e organizar dados em tempo real, com foco em interface responsiva e boa experiência de uso.</p>
+      <div class="tags"><span>JavaScript</span><span>React</span><span>API</span></div>
+      <button class="code-toggle" onclick="toggleCode(this, 'code-1')" type="button">
+        <span class="chev">▸</span> Ver código
+      </button>
+      <pre class="code-block" id="code-1"><code><span class="kw">import</span> { useEffect, useState } <span class="kw">from</span> <span class="str">"react"</span>;
+
+<span class="kw">function</span> <span class="fn">ListaDeDados</span>() {
+&nbsp;&nbsp;<span class="kw">const</span> [dados, setDados] = <span class="fn">useState</span>([]);
+
+&nbsp;&nbsp;<span class="fn">useEffect</span>(() => {
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">fetch</span>(<span class="str">"/api/dados"</span>)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">then</span>(res => res.<span class="fn">json</span>())
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">then</span>(setDados);
+&nbsp;&nbsp;}, []);
+
+&nbsp;&nbsp;<span class="kw">return</span> (
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{dados.<span class="fn">map</span>(item => &lt;li key={item.id}&gt;{item.nome}&lt;/li&gt;)}
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;);
+}</code></pre>
+    </div>
+
+    <div class="project">
+      <div class="sig"><span class="fn">projeto</span>(<span class="str">"Nome do Projeto 2"</span>)</div>
+      <p>Sistema back-end em Django com banco de dados SQL, criado para automatizar cadastros e gerar relatórios de forma organizada.</p>
+      <div class="tags"><span>Python</span><span>Django</span><span>SQL</span></div>
+      <button class="code-toggle" onclick="toggleCode(this, 'code-2')" type="button">
+        <span class="chev">▸</span> Ver código
+      </button>
+      <pre class="code-block" id="code-2"><code><span class="kw">from</span> django.db <span class="kw">import</span> models
+
+<span class="kw">class</span> <span class="fn">Cadastro</span>(models.Model):
+&nbsp;&nbsp;nome = models.CharField(max_length=<span class="num">100</span>)
+&nbsp;&nbsp;email = models.EmailField()
+&nbsp;&nbsp;criado_em = models.DateTimeField(auto_now_add=<span class="kw">True</span>)
+
+&nbsp;&nbsp;<span class="kw">def</span> <span class="fn">__str__</span>(self):
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> self.nome
+
+<span class="kw">def</span> <span class="fn">gerar_relatorio</span>(request):
+&nbsp;&nbsp;cadastros = Cadastro.objects.<span class="fn">all</span>()
+&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">render</span>(request, <span class="str">"relatorio.html"</span>, {<span class="str">"dados"</span>: cadastros})</code></pre>
+    </div>
+
+    <div class="project">
+      <div class="sig"><span class="fn">projeto</span>(<span class="str">"Nome do Projeto 3"</span>)</div>
+      <p>Aplicativo mobile desenvolvido em Java, pensado para resolver uma tarefa do dia a dia de forma simples e direta.</p>
+      <div class="tags"><span>Java</span><span>Mobile</span></div>
+      <button class="code-toggle" onclick="toggleCode(this, 'code-3')" type="button">
+        <span class="chev">▸</span> Ver código
+      </button>
+      <pre class="code-block" id="code-3"><code><span class="kw">public class</span> <span class="cls">TarefaActivity</span> <span class="kw">extends</span> AppCompatActivity {
+
+&nbsp;&nbsp;<span class="kw">private</span> List&lt;Tarefa&gt; listaTarefas;
+
+&nbsp;&nbsp;<span class="kw">@Override</span>
+&nbsp;&nbsp;<span class="kw">protected void</span> <span class="fn">onCreate</span>(Bundle savedInstanceState) {
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">super</span>.<span class="fn">onCreate</span>(savedInstanceState);
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">setContentView</span>(R.layout.activity_tarefa);
+&nbsp;&nbsp;&nbsp;&nbsp;listaTarefas = <span class="kw">new</span> ArrayList&lt;&gt;();
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">carregarTarefas</span>();
+&nbsp;&nbsp;}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTATO ============ -->
+<section id="contact">
+  <div class="section-head">
+    <span class="path">~/contato</span>
+    <h2><span class="kw">$</span> falar --com=voce</h2>
+  </div>
+
+  <div class="terminal">
+    <div><span class="prompt">seu-nome@portfolio</span><span class="path2">:~$</span> whoami</div>
+    <div class="out">Seu Nome — sempre aberto(a) a novos projetos e oportunidades.</div>
+    <div><span class="prompt">seu-nome@portfolio</span><span class="path2">:~$</span> cat contatos.txt</div>
+    <div class="contact-links">
+      <a class="btn" href="mailto:gusta500700@gmail.com">✉ Email</a>
+      <a class="btn" href="https://github.com/s1mp21" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://discord.gg/d7DU9X5rt" target="_blank" rel="noopener">Discord</a>
+      <a class="btn" href="https://linkedin.com/in/seu-usuario" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="year"></span> Seu Nome — feito com HTML, CSS e JS puro.</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function toggleCode(btn, id) {
+    const block = document.getElementById(id);
+    const isOpen = block.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.lastChild.textContent = isOpen ? ' Ocultar código' : ' Ver código';
+  }
+
+  // Destaca a aba correspondente à seção visível
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('section[id]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tabs.forEach(t => t.classList.remove('active'));
+        const active = document.querySelector(`.tab[data-tab="${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
